@@ -33,9 +33,6 @@ app.use((req, res, next) => {
 
 app.use(express.static("./public"));
 
-app.get("/", (req, res) => {
-    res.send("home page!");
-});
 
 app.get("/", (req, res) => {
     res.render("home", {
