@@ -1,0 +1,33 @@
+* {
+    box-sizing: border-box;
+}
+.base {
+    background-image: url(.assets/water.jpg);
+    max-width: 100vw;
+    max-height: 100vh;
+    z-index: -99;
+}
+button {
+    width: 150px;
+    height: 50px;
+    border-radius: 12px;
+    background-color: blue;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px 1px 1px rgb(105, 99, 99);
+    padding: 2px 4px;
+    border: solid 3px rgb(104, 98, 98);
+    font-size: 18px;
+    font-family: sans-serif;
+}
+button:hover {
+    position: relative;
+    transition-property: background-color, color;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out;
+    background-color: red;
+    color: white;
+    box-shadow: 1px 1px 1px orangered;
+}
+
