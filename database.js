@@ -1,6 +1,6 @@
 // setup spiced-postgres module
 const spicedPg = require("spiced-pg");
-const db = spicedPg("postgres:postgres:postgres@localhost:5432/petition");
+const db = spicedPg("postgres:postgres:postgres@localhost:5432/zoey");
 
 module.exports.newSignature = function (
     firstName,
@@ -9,17 +9,20 @@ module.exports.newSignature = function (
     country,
     signature
 ) {
-    return db
-        .query(
-            `INSERT INTO signatures (firstName, firstName, age, country, signature) VALUES($1, $2, $3, $4, $5)`,
-            [firstName, lastName, age, country, signature]
-        )
-        .then((result) => {
-            console.log(result.rows);
-            // you get here when your db query successfully completed!
+    return db.query(
+        `INSERT INTO signatures (firstName, lastName, age, country, signature) VALUES($1, $2, $3, $4, $5) RETURNING id`,
+        [firstName, lastName, age, country, signature]
+    );
+};
 
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+module.exports.findSignature = function (id) {
+    return db.query(`SELECT signature FROM signatures WHERE id = $1`, [id]);
+};
+
+module.exports.getAllSigners = function () {
+    return db.query("SELECT * FROM signatures");
+};
+
+module.exports.getNumberOfSigners = function () {
+    return db.query("SELECT COUNT(*) as num FROM signatures");
 };

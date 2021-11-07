@@ -21,16 +21,14 @@
             />
             <input type="hidden" id="input-canvas" name="signature" />
             <p class="notice">Please sign bellow:</p>
-            <canvas id="canvas" width="300" height="100"></canvas>
+            <canvas id="myCanvas" width="300" height="100"></canvas>
 
-            <button id="sign">Sign</button>
+            <button id="submit">Submit</button>
         </form>
-        <div class="error-msg">
+        <div class={{class}}>
             <p>Please input data fully: First Name, Last Name and Signature</p>
         </div>
-
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="/canvas.js"></script>
     </div>
-
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script type="text/javascript" src="canvas.js"></script>

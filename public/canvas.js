@@ -1,18 +1,18 @@
-const canvas = $("#canvas");
-canvas.style.border = "2px dotted grey";
-const cont = canvas.getContext("2d");
+const myCanvas = $("canvas");
+myCanvas.css({ border: "2px dotted grey" });
+const cont = myCanvas[0].getContext("2d");
 
 cont.strokeStyle = "black";
 var x;
 var y;
 var move;
-var sign = document.$("signature");
+var sign = $("#input-canvas");
 
-canvas.on("mousedown", function (e) {
+myCanvas.on("mousedown", function (e) {
     e.stopPropagation();
     x = e.offsetX;
     y = e.offsetY;
-    canvas.on(
+    myCanvas.on(
         "mousemove",
         (move = function (e) {
             cont.moveTo(x, y);
@@ -24,8 +24,8 @@ canvas.on("mousedown", function (e) {
     );
 });
 
-canvas.on("mouseup", function () {
-    canvas.off("mousemove");
-    sign.value = canvas.toDataURL();
-    console.log("sign.val: ", sign.value);
+myCanvas.on("mouseup", function () {
+    myCanvas.off("mousemove");
+    sign.val(myCanvas[0].toDataURL());
+    console.log(sign[0]);
 });
