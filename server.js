@@ -3,6 +3,7 @@ const app = express();
 const hb = require("express-handlebars");
 const db = require("./database.js");
 const cookieSession = require("cookie-session");
+const { hash } = require("bcryptjs");
 // get rid of cookieParser !! it is very easy to tamper.
 
 app.engine("handlebars", hb());
@@ -11,7 +12,8 @@ app.set("view engine", "handlebars");
 app.use(express.static("./public"));
 app.use(require("body-parser").urlencoded({ extended: false }));
 
-//setup cookie-session middleware(take boilerplate and get it to work)
+/***************************   COOKIE-session middleware   ********************/
+
 app.use(
     cookieSession({
         secret: `You are so beautiful!`,
@@ -28,35 +30,88 @@ app.use((req, res, next) => {
 });
 
 /*********************************   Route   **********************************/
+
 app.get("/", (req, res) => {
     res.render("home", {
         layout: "main",
     });
 });
 
-app.get("/sign", (req, res) => {
-    res.render("sign", {
+// ----------------------------   Authentication  ---------------------------------
+
+app.get("/registration", (req, res) => {
+    res.render("registration", {
         layout: "main",
         class: "hide",
     });
 });
 
-app.post("/sign", (req, res) => {
-    let { firstName, lastName, age, country, signature } = req.body;
-    // CALL FUNCTION TO INSERT SIGNER INTO DB HERE
-    db.newSignature(firstName, lastName, age, country, signature)
-        .then((result) => {
-            req.session.sigId = result.rows[0].id;
-            res.redirect("/thanks");
+app.post("/registration", (req, res) => {
+    db.hashPassword(req.body.password)
+        .then((hashPw) => {
+            return db
+                .newSignature(
+                    req.body.firstName,
+                    req.body.lastName,
+                    req.body.email,
+                    hashPw,
+                    req.body.signature
+                )
+                .then((result) => {
+                    req.session.sigId = result.rows[0].id;
+                    res.redirect("/thanks");
+                });
         })
-        .catch((e) => {
-            console.log(e);
-            res.render("sign", {
+        .catch((err) => {
+            console.log(err);
+            res.render("registration", {
                 layout: "main",
                 class: "show",
             });
         });
 });
+
+app.get("/login", (req, res) => {
+    res.render("login", {
+        layout: "main",
+    });
+});
+
+app.post("/login", (req, res) => {
+    db.showHashPw(req.body.email)
+        .then((userPw) => {
+            if (!userPw) {
+                res.redirect("/registration");
+            } else {
+                console.log(123);
+                console.log(req.body.password);
+                console.log(userPw);
+                return db.checkPassword(req.body.password, userPw);
+            }
+        })
+        .then((doesMatch) => {
+            console.log(doesMatch);
+            if (doesMatch) {
+                db.getLoginId(req.body.email).then((id) => {
+                    req.session.sigId = id;
+                    return db.checkForSig(id).then((sigId) => {
+                        if (sigId) {
+                            req.session.sigId = sigId;
+                            res.redirect("/thanks");
+                        } else {
+                            res.redirect("/login");
+                        }
+                    });
+                });
+            } else {
+                res.redirect("/registration");
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
+
 
 app.get("/thanks", (req, res) => {
     if (req.session.sigId) {
@@ -76,7 +131,7 @@ app.get("/thanks", (req, res) => {
                 res.sendStatus(500);
             });
     } else {
-        res.redirect("/sign");
+        res.redirect("/registration");
     }
 });
 
@@ -89,18 +144,10 @@ app.get("/list", (req, res) => {
     });
 });
 
-// app.get("/test", (req, res) => {
-//     console.log("*************** IN /test route ***************");
-//     req.session.sigId = 100;
-//     console.log("req.session in /test BEFORE i redirect", req.session);
-//     console.log("*********************************************");
-//     res.redirect("/");
-// });
-
 //add this logout route to delete cookies
 app.get("/logout", (req, res) => {
     req.session = null;
-    res.redirect("/home");
+    res.redirect("/");
 });
 
 app.use(function logUrl(req, res, next) {
