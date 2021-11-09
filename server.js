@@ -50,16 +50,19 @@ app.post("/registration", (req, res) => {
     db.hashPassword(req.body.password)
         .then((hashPw) => {
             return db
-                .newSignature(
+                .newUser(
                     req.body.firstName,
                     req.body.lastName,
                     req.body.email,
-                    hashPw,
-                    req.body.signature
+                    hashPw
                 )
-                .then((result) => {
-                    req.session.sigId = result.rows[0].id;
-                    res.redirect("/thanks");
+                .then((userId) => {
+                    return db
+                        .addSignature(userId, req.body.signature)
+                        .then((sigid) => {
+                            req.session.sigId = sigid;
+                            res.redirect("/thanks");
+                        });
                 });
         })
         .catch((err) => {
@@ -90,7 +93,6 @@ app.post("/login", (req, res) => {
             }
         })
         .then((doesMatch) => {
-            console.log(doesMatch);
             if (doesMatch) {
                 db.getLoginId(req.body.email).then((id) => {
                     req.session.sigId = id;
@@ -111,7 +113,6 @@ app.post("/login", (req, res) => {
             console.log(err);
         });
 });
-
 
 app.get("/thanks", (req, res) => {
     if (req.session.sigId) {
@@ -154,5 +155,14 @@ app.use(function logUrl(req, res, next) {
     console.log(req.url);
     next();
 });
+
+// app.get("/profile", (req, res));
+
+// app.post("/profile");
+// const { age, city, url } = req.body;
+// const parseAge = Number.parseInt(age);
+// if (!url.startsWith("http")) {
+//     url = "http://" + url;
+// }
 
 app.listen(8080, () => console.log("Siri is listening..."));
