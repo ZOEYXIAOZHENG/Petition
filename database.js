@@ -1,6 +1,9 @@
 // setup spiced-postgres module
 const spicedPg = require("spiced-pg");
-const db = spicedPg("postgres:postgres:postgres@localhost:5432/zoey");
+const db = spicedPg(
+    process.env.DATABASE_URL ||
+        "postgres:postgres:postgres@localhost/zoey"
+);
 const bcrypt = require("bcryptjs");
 
 exports.newUser = function (firstName, lastName, email, password) {
@@ -118,3 +121,5 @@ exports.showHashPw = function (email) {
 //     return db.query(`$1, $2`, [userId])
 
 // };
+
+exports.getCities;

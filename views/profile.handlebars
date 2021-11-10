@@ -1,1 +1,11 @@
-<h1>Hi. this is {{firstName}} 's Profile</h1>
+<h1>{{firstName}} {{lastName}} 's Profile</h1>
+
+<ol>
+    {{#signers}}
+        <li>{{firstname}} {{lastname}}</li>
+        <li> signed at {{signedat}}</li>
+        <li>{{age}}</li>
+        <li>{{city}}</li>
+        <li>{{user_url}}</li>
+    {{/signers}}
+</ol>

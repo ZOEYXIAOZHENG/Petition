@@ -3,21 +3,30 @@ const app = express();
 const hb = require("express-handlebars");
 const db = require("./database.js");
 const cookieSession = require("cookie-session");
-const { hash } = require("bcryptjs");
-// get rid of cookieParser !! it is very easy to tamper.
+// get rid of cookieParser !! it is very easy tampering.
 
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
 
-app.use(express.static("./public"));
-app.use(require("body-parser").urlencoded({ extended: false }));
+const COOKIE_SECRET  =
+    process.env.COOKIE_SECRET || require("./secrets.json").COOKIE_SECRET;
 
-/***************************   COOKIE-session middleware   ********************/
+if (process.env.NODE_ENV == "production") {
+    app.use((req, res, next) => {
+        if (req.headers["x-forwarded-proto"].startsWith("https")) {
+            return next();
+        }
+        res.redirect(`https://${req.hostname}${req.url}`);
+    });
+}
+
+app.use(express.static("./public"));
+app.use(urlencoded({ extended: false }));
 
 app.use(
     cookieSession({
-        secret: `You are so beautiful!`,
-        maxAge: 1000 * 60 * 60 * 24 * 14, // validity of cookie for 2 weeks
+        secret: COOKIE_SECRET,
+        maxAge: 1000 * 60 * 60 * 24 * 14,
         sameSite: true, // to prevent CSRF **  WEBSITE SECURITY  **
     })
 );
@@ -35,6 +44,11 @@ app.get("/", (req, res) => {
     res.render("home", {
         layout: "main",
     });
+});
+
+app.use((req, res, next) => {
+    console.log(req.url);
+    next();
 });
 
 // ----------------------------   Authentication  ---------------------------------
@@ -86,7 +100,6 @@ app.post("/login", (req, res) => {
             if (!userPw) {
                 res.redirect("/registration");
             } else {
-                console.log(123);
                 console.log(req.body.password);
                 console.log(userPw);
                 return db.checkPassword(req.body.password, userPw);
@@ -151,11 +164,6 @@ app.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
-app.use(function logUrl(req, res, next) {
-    console.log(req.url);
-    next();
-});
-
 // app.get("/profile", (req, res));
 
 // app.post("/profile");
@@ -165,4 +173,29 @@ app.use(function logUrl(req, res, next) {
 //     url = "http://" + url;
 // }
 
+app.get("cities", (req, res) => {
+    db.getCities().then((cities) => res.render("city-list", { city }));
+});
+
 app.listen(8080, () => console.log("Siri is listening..."));
+
+if (condition1 && condition2) {
+}
+
+app.post("profile/edit", (req, res) => {
+    const { password } = req.body;
+
+    city = city || "Berlin";
+});
+
+if (password) {
+    db.updateUserWithPassword();
+}
+
+password && db.updateUserWithPassword();
+
+const loggedIn = true;
+
+const statusCode = loggedIn ? 200 : 403;
+
+let statusCode;
