@@ -1,34 +1,24 @@
 <div id="sign-page">
     <div id="petition-msg">
-        <h3>Although peeing for free is a God-given right in ‘Muricah, you’ll
-            find that’s not usually the case in Germany
+        <h3>Pay to Pee
         </h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip</p>
+        <p>It's not a joke 2.3 billion people - one in three of the world's
+            population do not have access to a safe,private place to go to the
+            toilet.</p>
     </div>
+    <h4>It is no joke 1400 children die daily due to unsafe water and poor
+        sanitation.</h4>
     <div id="sign-block">
-
-        <form method="POST">
-            <input type="text" name="firstName" placeholder="First name" />
-            <input type="text" name="lastName" placeholder="Last name" />
-            <input type="text" name="age" placeholder="Age" />
-            <input
-                type="text"
-                name="country"
-                placeholder="where are you from?"
-            />
+        <form method="post">
             <input type="hidden" id="input-canvas" name="signature" />
             <p class="notice">Please sign below:</p>
             <canvas id="myCanvas" width="300" height="100"></canvas>
-
-            <button id="submit">Submit</button>
+            <button>sign</button>
         </form>
-        <div class={{class}}>
-            <p>Please input data fully: First Name, Last Name and Signature</p>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script type="text/javascript" src="/canvas.js"></script>
+        <form method="post" action="/sign/delete"><button>Delete Signature</button></form>
+        <a id="see-list" href="/list">See all the Signers >></a>
+        <a id="editPro" href="/profile">To Edit your profile >></a>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="/canvas.js"></script>
 </div>

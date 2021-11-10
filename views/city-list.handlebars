@@ -1,9 +1,18 @@
-<div class="citylist-page"></div>
-
+<div class="city-list page"></div>
 <h1>This is all the lovely signers from <em>{{city}}</em></h1>
-
 <ol>
     {{#signers}}
-        <li>{{firstname}} {{lastname}}, {{age}}, signed at {{signedat}}</li>
+        <li>{{first_name}}
+            {{last_name}}
+            {{age}}
+            {{city}}
+            <img
+                src="{{signature}}"
+                alt="signature"
+                width="50px"
+                height="20px"
+            /></li>
+
     {{/signers}}
 </ol>
+<a href="/list">Back</a>

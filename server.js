@@ -3,12 +3,13 @@ const app = express();
 const hb = require("express-handlebars");
 const db = require("./database.js");
 const cookieSession = require("cookie-session");
+const { response } = require("express");
 // get rid of cookieParser !! it is very easy tampering.
 
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
 
-const COOKIE_SECRET  =
+const COOKIE_SECRET =
     process.env.COOKIE_SECRET || require("./secrets.json").COOKIE_SECRET;
 
 if (process.env.NODE_ENV == "production") {
@@ -21,13 +22,13 @@ if (process.env.NODE_ENV == "production") {
 }
 
 app.use(express.static("./public"));
-app.use(urlencoded({ extended: false }));
+app.use(require("body-parser").urlencoded({ extended: false }));
 
 app.use(
     cookieSession({
         secret: COOKIE_SECRET,
         maxAge: 1000 * 60 * 60 * 24 * 14,
-        sameSite: true, // to prevent CSRF **  WEBSITE SECURITY  **
+        sameSite: true, // to prevent CSRF
     })
 );
 /*****************************  WEBSITE SECURITY  *****************************/
@@ -48,6 +49,7 @@ app.get("/", (req, res) => {
 
 app.use((req, res, next) => {
     console.log(req.url);
+    console.log(req.session);
     next();
 });
 
@@ -64,19 +66,15 @@ app.post("/registration", (req, res) => {
     db.hashPassword(req.body.password)
         .then((hashPw) => {
             return db
-                .newUser(
+                .addnewUser(
                     req.body.firstName,
                     req.body.lastName,
                     req.body.email,
                     hashPw
                 )
-                .then((userId) => {
-                    return db
-                        .addSignature(userId, req.body.signature)
-                        .then((sigid) => {
-                            req.session.sigId = sigid;
-                            res.redirect("/thanks");
-                        });
+                .then((result) => {
+                    req.session.userId = result;
+                    res.redirect("/sign");
                 });
         })
         .catch((err) => {
@@ -100,21 +98,21 @@ app.post("/login", (req, res) => {
             if (!userPw) {
                 res.redirect("/registration");
             } else {
-                console.log(req.body.password);
-                console.log(userPw);
                 return db.checkPassword(req.body.password, userPw);
             }
         })
         .then((doesMatch) => {
             if (doesMatch) {
-                db.getLoginId(req.body.email).then((id) => {
-                    req.session.sigId = id;
-                    return db.checkForSig(id).then((sigId) => {
-                        if (sigId) {
-                            req.session.sigId = sigId;
+                db.getLoginId(req.body.email).then((userId) => {
+                    req.session.userId = userId;
+                    console.log(userId);
+                    return db.checkForSig(userId).then((result) => {
+                        console.log(result);
+                        if (result.rows) {
+                            req.session.sigId = result.rows[0].id;
                             res.redirect("/thanks");
                         } else {
-                            res.redirect("/login");
+                            res.redirect("/sign");
                         }
                     });
                 });
@@ -127,10 +125,35 @@ app.post("/login", (req, res) => {
         });
 });
 
+app.get("/sign", (req, res) => {
+    res.render("sign", { layout: "main" });
+});
+
+app.post("/sign", (req, res) => {
+    Promise.resolve(
+        db
+            .addSignature(req.session.userId, req.body.signature)
+            .then((sigId) => {
+                console.log("asdfsa", sigId);
+                req.session.sigId = sigId;
+                res.redirect("/thanks");
+            })
+    );
+});
+
+app.post("/sign/delete", (req, res) => {
+    Promise.resolve(
+        db.removeUserSig(req.session.userId).then((r) => {
+            req.session.sigId = null;
+            res.redirect("/sign");
+        })
+    );
+});
+
 app.get("/thanks", (req, res) => {
     if (req.session.sigId) {
         Promise.all([
-            db.findSignature(req.session.sigId),
+            db.getSignature(req.session.sigId),
             db.getNumberOfSigners(),
         ])
             .then((result) => {
@@ -158,44 +181,85 @@ app.get("/list", (req, res) => {
     });
 });
 
+app.get("/list/:city", (req, res) => {
+    const city = req.params.city;
+    db.getSignersByCity(city).then((signers) => {
+        res.render("city-list", {
+            layout: "main",
+            city,
+            signers,
+        });
+    });
+});
+
+app.get("/profile", (req, res) => {
+    if (!req.session.userId) {
+        res.redirect("/registration");
+    }
+    if (!req.session.sigId) {
+        res.redirect("/sign");
+    }
+    Promise.resolve(db.getUser(req.session.userId)).then((users) => {
+        res.render("profile", {
+            layout: "main",
+            users,
+        });
+    });
+});
+
+app.get("/profile/edit", (req, res) => {
+    Promise.resolve(db.getUser(req.session.userId)).then((users) => {
+        res.render("profile-edit", {
+            layout: "main",
+            users,
+        });
+    });
+});
+
+app.post("/profile/edit", (req, res) => {
+    const { firstName, lastName, email, password, age, city, facebookLink } =
+        req.body;
+    const userId = req.session.userId;
+    let userUpdatePromise;
+
+    if (password) {
+        db.hashPassword(password).then(async (passwordHash) => {
+            awaituserUpdatePromise = await db.updateUserWithPassword(
+                userId,
+                firstName,
+                lastName,
+                email,
+                passwordHash
+            );
+        });
+    } else {
+        db.updateUser(userId, firstName, lastName, email).then(
+            async (result) => {
+                awaituserUpdatePromise = await db.updateUser(
+                    userId,
+                    firstName,
+                    lastName,
+                    email
+                );
+            }
+        );
+        // Save the resulting promise to userUpdatePromise
+    }
+
+    Promise.all([
+        userUpdatePromise,
+        db.upsertProfile(userId, age, city, facebookLink),
+    ])
+        .then(res.redirect("/thanks"))
+        .catch(function (err) {
+            console.log(err);
+        });
+});
+
 //add this logout route to delete cookies
 app.get("/logout", (req, res) => {
     req.session = null;
     res.redirect("/");
 });
 
-// app.get("/profile", (req, res));
-
-// app.post("/profile");
-// const { age, city, url } = req.body;
-// const parseAge = Number.parseInt(age);
-// if (!url.startsWith("http")) {
-//     url = "http://" + url;
-// }
-
-app.get("cities", (req, res) => {
-    db.getCities().then((cities) => res.render("city-list", { city }));
-});
-
 app.listen(8080, () => console.log("Siri is listening..."));
-
-if (condition1 && condition2) {
-}
-
-app.post("profile/edit", (req, res) => {
-    const { password } = req.body;
-
-    city = city || "Berlin";
-});
-
-if (password) {
-    db.updateUserWithPassword();
-}
-
-password && db.updateUserWithPassword();
-
-const loggedIn = true;
-
-const statusCode = loggedIn ? 200 : 403;
-
-let statusCode;

@@ -1,0 +1,23 @@
+<div>
+    <h3>Please update your profile</h3>
+</div>
+    <form method="POST">
+        {{#users}}
+        <label>First Name <input type="text" name="firstName" value={{first_name}} ></label>
+        <label>Last Name <input type="text" name="lastName" value={{last_name}} ></label>
+        <label>Email <input type="text" name="email" value={{email}} ></label>
+        <label>Password <input type="text" name="password" placeholder="password" ></label>
+        <label>Age <input type="text" name="age" value={{age}}  ></label>
+        <label>City <input type="text" name="city" value={{city}} ></label>
+        <label>Facebook Link <input
+            type="url"
+            name="facebookLink"
+            placeholder="your Facebook link"
+            pattern= "^https?://.*"
+        ></label>
+        {{/users}}
+        <button id="submit">Update</button>
+    </form>
+    <a href="/profile">Cancel</a>
+
+</div>

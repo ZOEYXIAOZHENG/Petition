@@ -1,11 +1,18 @@
-<h1>{{firstName}} {{lastName}} 's Profile</h1>
-
-<ol>
-    {{#signers}}
-        <li>{{firstname}} {{lastname}}</li>
-        <li> signed at {{signedat}}</li>
-        <li>{{age}}</li>
-        <li>{{city}}</li>
-        <li>{{user_url}}</li>
-    {{/signers}}
-</ol>
+<div>
+    <h3>Let us more about yourself</h3>
+</div>
+<div class="profile-edit-page">
+    {{#users}}
+        <ul>
+            <li>First Name: {{first_name}}</li>
+            <li>Last Name: {{last_name}}</li>
+            <li>Email: {{email}}</li>
+            <li>Age: {{age}}</li>
+            <li>City: {{city}}</li>
+            <li>Facebook Link: <a href{{facebook_link}}=>{{facebook_link}}</li>
+        </ul>
+        <img src="{{signature}}" alt="signature" width="600px" height="150px" />
+    {{/users}}
+    <a href="/profile/edit">Update Profile</a>
+    <a href="/list">See all signatures</a>
+</div>
