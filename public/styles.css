@@ -18,13 +18,13 @@
     filter: brightness(50%);
     z-index: -99;
 }
-header {
-    display: block;
+.petition {
+    /* display: block; */
     font-family: Open Sans, Arial, sans-serif;
     color: white;
     box-shadow: rgb(0 0 0 / 90%);
     height: 350px;
-    top: 50vh;
+    margin-top: 45vh;
     font-size: 45px;
     text-align: center;
 }
@@ -62,7 +62,6 @@ button {
     border: solid 3px rgb(104, 98, 98);
     font-size: 16px;
     font-family: sans-serif;
-    margin-left: 10vw;
     margin-bottom: 7vh;
 }
 button:hover {
@@ -78,48 +77,98 @@ footer {
     color: rgb(235, 230, 230);
     font-family: copperplate;
     font-size: medium;
-    display: grid;
-    place-items: center;
+    position: absolute;
+    /* left: 40vw; */
+    bottom: 4vh;
+    width: 100%;
     letter-spacing: 0.03em;
-    margin-top: 9vh;
+    margin-top: 6vh;
+    z-index: 100;
 }
 .hide {
     visibility: hidden;
 }
 .show {
     color: red;
+    font-size: 20px;
+    font-family: monospace;
 }
 
-.bg-thanks {
-    background-image: url(../thankyou.png);
+.thanks-page {
+    background-image: url(../B1.jpg);
     position: fixed;
     top: 0;
     left: 0;
-    width: 60%;
-    height: 90%;
-    min-width: 60vw;
-    /* zoom: 0.5; */
+    width: 100%;
+    height: 100%;
+    min-width: 1000px;
+    zoom: 1;
     background-repeat: no-repeat;
-    background-size: contain;
-    /* -webkit-background-size: cover;
-    -o-background-size: cover;*/
+    background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
     background-position: center 0;
-    filter: brightness(90%);
     z-index: -99;
-    margin: auto;
-    display: flex;
 }
 
-.icon {
-    background-image: url(../no-coin.png);
-    width: 250px;
-    height: 180px;
-    background-size: cover;
-    max-width: 100%;
-    max-height: 100%;
+.thanks-info {
+    width: 1000px;
+    height: 700px;
+    border-radius: 50%;
+    background-color: rgba(249, 246, 240, 0.8);
+    flex-wrap: wrap;
     position: absolute;
-    padding: 40px 70px 40px 20px;
+    top: 50%;
+    left: 50%;
+    margin-top: -350px;
+    margin-left: -500px;
+    display: grid;
+    place-items: center;
+    gap: 20px;
 }
+
+.thanks-info h1 {
+    margin-top: 150px;
+    font-family: Blippo;
+    font-size: 44px;
+    color: #fff;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #f438f7,
+            0 0 40px #f438f7, 0 0 50px #f438f7, 0 0 60px #f438f7,
+            0 0 70px #f438f7;
+    }
+    to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #f03308, 0 0 40px #f03308,
+            0 0 50px #f03308, 0 0 60px #f03308, 0 0 70px #f03308,
+            0 0 80px #f03308;
+    }
+}
+
+.thanks-info a {
+    display: flex;
+    margin-top: 20px;
+    align-content: flex-center;
+    align-items: center;
+    font-size: 20px;
+    color: #f03308;
+    margin-bottom: 30px;
+}
+.thanks-info a:hover {
+    position: relative;
+    transition-property: background-color, color;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-out;
+    color: yellow;
+    font-weight: bolder;
+    z-index: 10;
+}
+
 .registration-side {
     width: 50vw;
     height: 100vh;
@@ -142,15 +191,6 @@ input {
     font-size: 15px;
     margin-left: 20px;
 }
-.login-page {
-    flex-wrap: wrap;
-    width: 50vw;
-    height: 100vh;
-    float: right;
-    display: flex;
-    flex-direction: column;
-    padding: 8vh 5vw;
-}
 
 input.tick {
     width: 20px;
@@ -159,7 +199,139 @@ input.tick {
     font-family: open sans-serif;
 }
 .leftSide {
-    background-image: url(../toilet-icon.webp);
-    width:50vw;
-    height:100vh;
+    background-image: url(../logo.webp);
+    background-color: yellow;
+    width: 50vw;
+    height: 100vh;
+    background-size: cover;
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -99;
+}
+
+.base-login,
+.profile {
+    background-image: url(../astronaut.jpg);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 1000px;
+    zoom: 1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-position: center 0;
+    filter: brightness(70%);
+    z-index: -99;
+}
+.login-box {
+    flex-wrap: wrap;
+    width: 480px;
+    height: 350px;
+    background-color: rgba(47, 44, 44, 0.4);
+    border-radius: 12px;
+    padding: 40px 60px;
+    position: absolute;
+    top: 60%;
+    left: 75%;
+    margin-top: -175px; /* this is half the height of your div*/
+    margin-left: -200px; /*this is half of width of your div*/
+}
+
+.login-page h1 {
+    color: ivory;
+}
+
+.profile-box {
+    flex-wrap: wrap;
+    display: grid;
+    width: 35vw;
+    height: 75vh;
+    background-color: rgba(251, 249, 249, 0.5);
+    border-radius: 12px;
+    padding: 40px 60px;
+    position: absolute;
+    top: 50px;
+    left: 100px;
+    font-size: 24px;
+    letter-spacing: 0.02em;
+    row-gap: 12px;
+}
+
+.profile-box h3,
+h4 {
+    color: blue;
+}
+
+.profile-links {
+    flex-wrap: wrap;
+    display: grid;
+    width: 20vw;
+    height: 40vh;
+    background-color: rgba(251, 249, 249, 0.5);
+    border-radius: 12px;
+    padding: 40px;
+    position: absolute;
+    bottom: 250px;
+    right: 250px;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    row-gap: 12px;
+}
+.profile-links a {
+    color: blue;
+    font-family: sans-serif;
+    text-decoration: none;
+}
+
+.profile-links a:hover {
+    color: red;
+    font-size: 24px;
+}
+
+.profile-edit {
+    background: linear-gradient(40deg, rgb(65, 55, 177), rgb(237, 231, 55));
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 1000px;
+    zoom: 1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-position: center 0;
+    z-index: -99;
+}
+
+.edit-box {
+    flex-wrap: wrap;
+    display: grid;
+    place-items: center;
+    width: 40vw;
+    height: 80vh;
+    background-color: rgba(240, 240, 233, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    position: absolute;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    top: 50%;
+    left: 50%;
+    margin-top: -45vh;
+    margin-left: -20vw;
+    font-family: Noto;
+    margin-bottom: 30px;
+}
+.edit-box h3 {
+    font-family: Courier New;
+    font-size: 24px;
 }

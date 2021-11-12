@@ -1,7 +1,8 @@
-<div>
-    <h3>Let us more about yourself</h3>
-</div>
-<div class="profile-edit-page">
+<div class="profile"></div>
+
+<div class="profile-box">
+    <h3> Your Profile:</h3>
+    <h4> Maybe ,  you would like to tell us more about yourself ?</h4>
     {{#users}}
         <ul>
             <li>First Name: {{first_name}}</li>
@@ -11,8 +12,12 @@
             <li>City: {{city}}</li>
             <li>Facebook Link: <a href{{facebook_link}}=>{{facebook_link}}</li>
         </ul>
-        <img src="{{signature}}" alt="signature" width="600px" height="150px" />
-    {{/users}}
-    <a href="/profile/edit">Update Profile</a>
-    <a href="/list">See all signatures</a>
-</div>
+        <img src="{{signature}}" alt="signature" width="400px" height="150px" />
+    {{/users}}</div>
+
+<div class="profile-links">
+    <a href="/profile/edit"> 🔵 To Update your Profile >></a>
+    <a href="/list"> ♦️ To See all Singers >></a>
+    </div>
+    
+

@@ -1,11 +1,13 @@
-<div class="bg-thanks">
-    <div class="icon"></div>
-</div>
+<div class="thanks-page"></div>
+<div class="thanks-info">
 <h1>Thank you very much for your support!</h1>
-<img src="{{signature}}" alt="signature" width="600px" height="150px" />
-<div>
-    <a id="see-list" href="/list">See all {{num}} Signers >></a>
-    <a id="profile" href="/profile">To your profile >></a>
+<img src="{{signature}}" alt="signature" width="400px" height="150px" />
+    <div>
+        <a id="see-list" href="/list">See all {{num}} Signers >></a>
+        <a id="see-profile" href="/profile">To your profile >></a>
+    </div>
+    <form 
+        method="post" action="/sign/delete">
+        <button>Delete Signature</button></form>
+    </form>
 </div>
-<form method="post" action="/sign/delete"><button>Delete Signature</button></form>
-</form>

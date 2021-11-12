@@ -64,8 +64,6 @@ app.get("/registration", (req, res) => {
     });
 });
 
-
-
 app.post("/registration", (req, res) => {
     db.hashPassword(req.body.password)
         .then((hashPw) => {
@@ -84,9 +82,9 @@ app.post("/registration", (req, res) => {
         .catch((err) => {
             var errorMessage = "";
             if (err.message.includes("unique constraint")) {
-                errorMessage = "this email address was registered.";
+                errorMessage = " this email address was registered.";
             } else {
-                errorMessage = "please input data completely!";
+                errorMessage = " ⛔️ please input data completely!";
             }
             res.render("registration", {
                 layout: "main",
