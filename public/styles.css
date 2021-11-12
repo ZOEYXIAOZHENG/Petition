@@ -51,8 +51,8 @@ header {
 
 button {
     width: 100px;
-    height: 50px;
-    border-radius: 12px;
+    height: 44px;
+    border-radius: 15px;
     background-color: blue;
     transition-duration: 0.5s;
     transition-timing-function: ease-out;
@@ -119,4 +119,47 @@ footer {
     max-height: 100%;
     position: absolute;
     padding: 40px 70px 40px 20px;
+}
+.registration-side {
+    width: 50vw;
+    height: 100vh;
+    float: right;
+    display: flex;
+    flex-direction: column;
+    padding: 8vh 5vw;
+    flex-wrap: wrap;
+}
+
+input {
+    width: 200px;
+    height: 40px;
+    gap: 30px;
+    border: none;
+    border-bottom: 2px solid darkgray;
+    outline: none;
+    letter-spacing: 0.06em;
+    margin-bottom: 40px;
+    font-size: 15px;
+    margin-left: 20px;
+}
+.login-page {
+    flex-wrap: wrap;
+    width: 50vw;
+    height: 100vh;
+    float: right;
+    display: flex;
+    flex-direction: column;
+    padding: 8vh 5vw;
+}
+
+input.tick {
+    width: 20px;
+    height: 20px;
+    font-weight: lighter;
+    font-family: open sans-serif;
+}
+.leftSide {
+    background-image: url(../toilet-icon.webp);
+    width:50vw;
+    height:100vh;
 }

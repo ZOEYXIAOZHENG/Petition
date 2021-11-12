@@ -1,4 +1,3 @@
-// setup spiced-postgres module
 const spicedPg = require("spiced-pg");
 const db = spicedPg(
     process.env.DATABASE_URL || "postgres:postgres:postgres@localhost/zoey"
@@ -15,7 +14,7 @@ exports.addnewUser = function (firstName, lastName, email, password) {
             return results.rows[0].id;
         })
         .catch((err) => {
-            console.log(err);
+            throw err;
         });
 };
 
@@ -220,5 +219,3 @@ exports.removeUserSig = function (id) {
 exports.removeUserFromDB = function (id) {
     return db.query(`DELETE FROM users WHERE id = $1;`, [id || null]);
 };
-
-

@@ -2,8 +2,10 @@ const express = require("express");
 const app = express();
 const hb = require("express-handlebars");
 const db = require("./database.js");
+// import * as modules from "./database.js"; --- another way to import mudules
 const cookieSession = require("cookie-session");
 const { response } = require("express");
+// const supertest = require("supertest");
 // get rid of cookieParser !! it is very easy tampering.
 
 app.engine("handlebars", hb());
@@ -28,7 +30,7 @@ app.use(
     cookieSession({
         secret: COOKIE_SECRET,
         maxAge: 1000 * 60 * 60 * 24 * 14,
-        sameSite: true, // to prevent CSRF
+        sameSite: true, // to against CSRF
     })
 );
 /*****************************  WEBSITE SECURITY  *****************************/
@@ -62,6 +64,8 @@ app.get("/registration", (req, res) => {
     });
 });
 
+
+
 app.post("/registration", (req, res) => {
     db.hashPassword(req.body.password)
         .then((hashPw) => {
@@ -78,10 +82,16 @@ app.post("/registration", (req, res) => {
                 });
         })
         .catch((err) => {
-            console.log(err);
+            var errorMessage = "";
+            if (err.message.includes("unique constraint")) {
+                errorMessage = "this email address was registered.";
+            } else {
+                errorMessage = "please input data completely!";
+            }
             res.render("registration", {
                 layout: "main",
                 class: "show",
+                errorMessage,
             });
         });
 });
@@ -108,7 +118,7 @@ app.post("/login", (req, res) => {
                     console.log(userId);
                     return db.checkForSig(userId).then((result) => {
                         console.log(result);
-                        if (result.rows) {
+                        if (result.rows.length > 0) {
                             req.session.sigId = result.rows[0].id;
                             res.redirect("/thanks");
                         } else {
