@@ -24,7 +24,7 @@
             <li><input
                     type="password"
                     name="password"
-                    value="FakePSW"
+                    {{! value="FakePSW" }}
                     id="pp"
                     placeholder="Password"
                 /><input
@@ -41,6 +41,7 @@
         <a id="login" href="/login"> Log in</a>
     </p>
     <div class={{class}}>
-        <p>Ooops,something wrong, {{errorMessage}}</p>
+        <p> Ooops, {{errorMessage}} </p>
     </div>
 </div>
+<script src="/password.js"></script>

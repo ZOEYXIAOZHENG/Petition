@@ -1,19 +1,24 @@
-<div>
-    <h2>Here is a list of awesome people :</h2>
+<div class="signer-list">
+    <div class="signer-info">
+        <h2>Here is a list of awesome people :</h2>
+
+        <ol>
+            {{#signers}}
+                <li>{{first_name}}
+                    {{last_name}}
+                    {{age}}
+                    <a id="city" href="/list/{{city}}">{{city}}</a>
+                    <img
+                        src="{{signature}}"
+                        alt="signature"
+                        width="50px"
+                        height="20px"
+                    />
+                </li>
+            {{/signers}}
+        </ol>
+
+        <a href="/thanks">Back</a>
+
+    </div>
 </div>
-<ol>
-    {{#signers}}
-        <li>{{first_name}}
-            {{last_name}}
-            {{age}}
-            <a id="city" href="/list/{{city}}">{{city}}</a>
-            <img
-                src="{{signature}}"
-                alt="signature"
-                width="50px"
-                height="20px"
-            />
-        </li>
-    {{/signers}}
-</ol>
-<a href="/thanks">Back</a>

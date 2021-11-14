@@ -19,7 +19,7 @@
     z-index: -99;
 }
 .petition {
-    /* display: block; */
+    display: block;
     font-family: Open Sans, Arial, sans-serif;
     color: white;
     box-shadow: rgb(0 0 0 / 90%);
@@ -38,7 +38,7 @@
     align-content: flex-center;
     align-items: center;
     font-size: x-large;
-    color: rgb(206, 173, 65);
+    color: rgb(208, 176, 47);
 }
 #sign:hover {
     position: relative;
@@ -53,19 +53,19 @@ button {
     width: 100px;
     height: 44px;
     border-radius: 15px;
-    background-color: blue;
     transition-duration: 0.5s;
     transition-timing-function: ease-out;
-    background-color: rgb(255, 255, 255);
+    background-color: #d2d3da;
     box-shadow: 1px 1px 1px rgb(105, 99, 99);
     padding: 2px 4px;
     border: solid 3px rgb(104, 98, 98);
     font-size: 16px;
     font-family: sans-serif;
-    margin-bottom: 7vh;
+    margin-bottom: 20px;
+    margin-top: 30px;
 }
 button:hover {
-    position: relative;
+    /* position: relative; */
     transition-property: background-color, color;
     transition-duration: 0.5s;
     transition-timing-function: ease-out;
@@ -85,6 +85,7 @@ footer {
     margin-top: 6vh;
     z-index: 100;
 }
+
 .hide {
     visibility: hidden;
 }
@@ -94,49 +95,31 @@ footer {
     font-family: monospace;
 }
 
-.thanks-page {
-    background-image: url(../B1.jpg);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    min-width: 1000px;
-    zoom: 1;
-    background-repeat: no-repeat;
-    background-size: cover;
-    -webkit-background-size: cover;
-    -o-background-size: cover;
-    background-position: center 0;
-    z-index: -99;
-}
-
 .thanks-info {
-    width: 1000px;
-    height: 700px;
-    border-radius: 50%;
-    background-color: rgba(249, 246, 240, 0.8);
+    width: 400px;
+    height: 380px;
+    border-radius: 30%;
+    background-color: rgba(235, 230, 234, 0.7);
     flex-wrap: wrap;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -350px;
-    margin-left: -500px;
+    bottom: 15vh;
+    left: 15vw;
     display: grid;
     place-items: center;
-    gap: 20px;
+    padding: 20px;
 }
 
-.thanks-info h1 {
-    margin-top: 150px;
+.thanks-page h1 {
+    margin-top: 30vh;
+    left: 30vw;
     font-family: Blippo;
-    font-size: 44px;
-    color: #fff;
+    text-align: center;
+    font-size: 55px;
+    color: rgb(242, 238, 242);
     -webkit-animation: glow 1s ease-in-out infinite alternate;
     -moz-animation: glow 1s ease-in-out infinite alternate;
     animation: glow 1s ease-in-out infinite alternate;
 }
-
 @keyframes glow {
     from {
         text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #f438f7,
@@ -144,39 +127,26 @@ footer {
             0 0 70px #f438f7;
     }
     to {
-        text-shadow: 0 0 20px #fff, 0 0 30px #f03308, 0 0 40px #f03308,
-            0 0 50px #f03308, 0 0 60px #f03308, 0 0 70px #f03308,
-            0 0 80px #f03308;
+        text-shadow: 0 0 20px #fff, 0 0 30px #f02cb9, 0 0 40px #f02cb9,
+            0 0 50px #f02cb9, 0 0 60px #f02cb9, 0 0 70px #f02cb9,
+            0 0 80px #f02cb9;
     }
 }
 
-.thanks-info a {
-    display: flex;
-    margin-top: 20px;
-    align-content: flex-center;
-    align-items: center;
-    font-size: 20px;
-    color: #f03308;
-    margin-bottom: 30px;
-}
-.thanks-info a:hover {
-    position: relative;
-    transition-property: background-color, color;
-    transition-duration: 0.1s;
-    transition-timing-function: ease-out;
-    color: yellow;
-    font-weight: bolder;
-    z-index: 10;
-}
-
-.registration-side {
+.registration-side,
+#sign-block,
+#petition-msg {
     width: 50vw;
     height: 100vh;
-    float: right;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    place-items: center;
     padding: 8vh 5vw;
     flex-wrap: wrap;
+}
+
+.registration-side,
+#sign-block {
+    float: right;
 }
 
 input {
@@ -187,7 +157,7 @@ input {
     border-bottom: 2px solid darkgray;
     outline: none;
     letter-spacing: 0.06em;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     font-size: 15px;
     margin-left: 20px;
 }
@@ -198,8 +168,8 @@ input.tick {
     font-weight: lighter;
     font-family: open sans-serif;
 }
-.leftSide {
-    background-image: url(../logo.webp);
+.leftSide,
+#petition-msg {
     background-color: yellow;
     width: 50vw;
     height: 100vh;
@@ -211,9 +181,13 @@ input.tick {
     top: 0;
     z-index: -99;
 }
+.leftSide {
+    background-image: url(../logo.webp);
+}
 
 .base-login,
-.profile {
+.profile,
+.thanks-page {
     background-image: url(../astronaut.jpg);
     position: fixed;
     top: 0;
@@ -236,12 +210,11 @@ input.tick {
     height: 350px;
     background-color: rgba(47, 44, 44, 0.4);
     border-radius: 12px;
-    padding: 40px 60px;
+    padding: 30px;
     position: absolute;
-    top: 60%;
-    left: 75%;
-    margin-top: -175px; /* this is half the height of your div*/
-    margin-left: -200px; /*this is half of width of your div*/
+    top: 50vh;
+    left: 65vw;
+    margin: auto;
 }
 
 .login-page h1 {
@@ -251,51 +224,25 @@ input.tick {
 .profile-box {
     flex-wrap: wrap;
     display: grid;
-    width: 35vw;
+    width: 30vw;
     height: 75vh;
     background-color: rgba(251, 249, 249, 0.5);
     border-radius: 12px;
-    padding: 40px 60px;
+    padding: 40px 30px 40px 30px;
     position: absolute;
     top: 50px;
     left: 100px;
-    font-size: 24px;
+    font-size: 22px;
     letter-spacing: 0.02em;
     row-gap: 12px;
 }
 
-.profile-box h3,
-h4 {
+.profile-box h2 {
     color: blue;
 }
 
-.profile-links {
-    flex-wrap: wrap;
-    display: grid;
-    width: 20vw;
-    height: 40vh;
-    background-color: rgba(251, 249, 249, 0.5);
-    border-radius: 12px;
-    padding: 40px;
-    position: absolute;
-    bottom: 250px;
-    right: 250px;
-    font-size: 20px;
-    letter-spacing: 0.02em;
-    row-gap: 12px;
-}
-.profile-links a {
-    color: blue;
-    font-family: sans-serif;
-    text-decoration: none;
-}
-
-.profile-links a:hover {
-    color: red;
-    font-size: 24px;
-}
-
-.profile-edit {
+.profile-edit,
+.signer-list {
     background: linear-gradient(40deg, rgb(65, 55, 177), rgb(237, 231, 55));
     position: fixed;
     top: 0;
@@ -309,10 +256,10 @@ h4 {
     -webkit-background-size: cover;
     -o-background-size: cover;
     background-position: center 0;
-    z-index: -99;
 }
 
-.edit-box {
+.edit-box,
+.signer-info {
     flex-wrap: wrap;
     display: grid;
     place-items: center;
@@ -330,8 +277,93 @@ h4 {
     margin-left: -20vw;
     font-family: Noto;
     margin-bottom: 30px;
+    /* z-index: -30; */
 }
 .edit-box h3 {
     font-family: Courier New;
     font-size: 24px;
+}
+
+.title {
+    width: 50vw;
+    height: 30vh;
+    background-size: cover;
+    position: absolute;
+    left: 0;
+    top: 5vh;
+    z-index: -89;
+    background-color: black;
+    margin-bottom: 100px;
+}
+
+#petition-msg h1 {
+    color: white;
+    font-family: Arial;
+    font-size: 50px;
+}
+
+#petition-msg p,
+h4,
+#sign-block p {
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.logoImg {
+    background-image: url(../toilet-logo.png);
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+}
+
+#see-list,
+#see-profile,
+#to-logout,
+#edit-pro,
+#back {
+    font: bold 20px Arial;
+    text-decoration: none;
+    background-color: #1924bd;
+    color: #f9f8f8;
+    padding: 10px 5px 10px 5px;
+    border-top: 1px solid #cccccc;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-radius: 12px;
+    z-index: 20;
+}
+
+#see-list:hover,
+#see-profile:hover,
+#to-logout:hover,
+#edit-pro:hover,
+#back:hover {
+    background-color: orange;
+}
+
+.thanks-links,
+.profile-links {
+    flex-wrap: wrap;
+    display: grid;
+    width: 300px;
+    height: 400px;
+    padding: 40px 40px;
+    position: absolute;
+    bottom: 15vh;
+    right: 15vh;
+    letter-spacing: 0.02em;
+}
+
+.thanks-links {
+    row-gap: 80px;
+}
+
+.profile-links {
+    row-gap: 110px;
+}
+
+.edit-box a:hover,
+.signer-info a:hover {
+    color: chartreuse;
+    font-size: 22px;
 }

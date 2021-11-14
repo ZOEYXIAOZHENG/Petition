@@ -97,6 +97,7 @@ app.post("/registration", (req, res) => {
 app.get("/login", (req, res) => {
     res.render("login", {
         layout: "main",
+        class: "hide",
     });
 });
 
@@ -125,7 +126,10 @@ app.post("/login", (req, res) => {
                     });
                 });
             } else {
-                res.redirect("/registration");
+                res.render("login", {
+                    layout: "main",
+                    class: "show",
+                });
             }
         })
         .catch((err) => {

@@ -1,13 +1,16 @@
-<div class="thanks-page"></div>
+<div class="thanks-page">
+<h1>Thank you very much for your support!</h1></div>
+
+{{! <div id="thanks-box"> }}
 <div class="thanks-info">
-<h1>Thank you very much for your support!</h1>
-<img src="{{signature}}" alt="signature" width="400px" height="150px" />
-    <div>
-        <a id="see-list" href="/list">See all {{num}} Signers >></a>
-        <a id="see-profile" href="/profile">To your profile >></a>
-    </div>
-    <form 
-        method="post" action="/sign/delete">
-        <button>Delete Signature</button></form>
+
+    <img src="{{signature}}" alt="signature" width="380px" height="150px" />
+    <form method="post" action="/sign/delete">
+        <button>Delete Signature</button>
     </form>
+</div>
+<div class="thanks-links">
+    <a id="see-list" href="/list">See all {{num}} Signers >></a>
+    <a id="see-profile" href="/profile">To your profile >></a>
+    <a id="to-logout" href="/logout">Log out.</a>
 </div>

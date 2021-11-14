@@ -73,7 +73,7 @@ exports.getAllSigners = function () {
 exports.getNumberOfSigners = function () {
     return db.query(
         `
-        SELECT COUNT(*) 
+        SELECT COUNT(*) AS num
         FROM users u 
         LEFT JOIN signatures s ON u.id = s.user_id 
         WHERE s.id IS NOT NULL

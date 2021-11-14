@@ -1,23 +1,26 @@
 <div id="sign-page">
     <div id="petition-msg">
-        <h3>Pay to Pee
-        </h3>
+        <h1>Let's help people access toilets and make no more Pay-to-Pee in
+            Germany!
+        </h1>
         <p>It's not a joke 2.3 billion people - one in three of the world's
-            population do not have access to a safe,private place to go to the
+            population do not have access to a safe, private place to go to the
             toilet.</p>
-    </div>
-    <h4>It is no joke 1400 children die daily due to unsafe water and poor
-        sanitation.</h4>
+        <div class="title"></div>
+        <div class="logoImg"></div>
+
+        <h4>At the same times, there are about 1400 children die daily due to
+            unsafe water and poor sanitation.</h4></div>
     <div id="sign-block">
         <form method="post">
             <input type="hidden" id="input-canvas" name="signature" />
-            <p class="notice">Please sign below:</p>
-            <canvas id="myCanvas" width="300" height="100"></canvas>
-            <button>sign</button>
+            <p>If you are willing to help, please sign here:</p>
+            <canvas id="myCanvas" width="600" height="350"></canvas>
+            <button>save</button>
         </form>
         <form method="post" action="/sign/delete"><button>Delete Signature</button></form>
         <a id="see-list" href="/list">See all the Signers >></a>
-        <a id="editPro" href="/profile">To Edit your profile >></a>
+        <a id="edit-pro" href="/profile">To Edit your profile >></a>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="/canvas.js"></script>

@@ -17,22 +17,22 @@ test("GET /logout users are redirected to /home page", () => {
         });
 });
 
-test("GET /registration works", () => {
-    return supertest(app)
-        .get("/registration")
-        .then((res) => {
-            console.log(res.text, res.headers);
-            expect(res.statusCode).toBe(200);
-        });
-});
+// test("GET /registration works", () => {
+//     return supertest(app)
+//         .get("/registration")
+//         .then((res) => {
+//             console.log(res.text, res.headers);
+//             expect(res.statusCode).toBe(200);
+//         });
+// });
 
-test("GET /registration redirects to /sign when appropriate ", () => {
-    return supertest(app)
-        .get("/registration")
-        .then((res) => {
-            expect(res.statusCode).toBe(200);
-            expect(res.text).toContain(
-                "bookmark"
-            );
-        });
-});
+// test("GET /registration redirects to /sign when appropriate ", () => {
+//     return supertest(app)
+//         .get("/registration")
+//         .then((res) => {
+//             expect(res.statusCode).toBe(200);
+//             expect(res.text).toContain(
+//                 "bookmark"
+//             );
+//         });
+// });
