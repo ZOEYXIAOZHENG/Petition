@@ -274,4 +274,4 @@ app.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
-app.listen(8080, () => console.log("Siri is listening..."));
+app.listen(process.env.PORT || 8080, () => console.log("Siri is listening..."));
