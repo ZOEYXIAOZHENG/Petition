@@ -20,10 +20,10 @@ An online petition where supporters can register, log in, edit profile informati
 
 ## Preview
 
--   Registration & Intro Page
+-   Main features and function
 
-    <img src="public/gifs/petition_1.gif" width="800">
-    
+    <img src="public/gifs/petition_02.mov" >
+
 
 -   Login Page
 

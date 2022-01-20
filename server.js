@@ -127,10 +127,11 @@ app.post("/login", (req, res) => {
                     });
                 });
             } else {
-                res.render("login", {
+                res.redirect("login", {
                     layout: "main",
                     class: "show",
                 });
+                return;
             }
         })
         .catch((err) => {
