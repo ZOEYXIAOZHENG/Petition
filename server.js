@@ -5,8 +5,7 @@ const db = require("./database.js");
 // import * as modules from "./database.js"; --- another way to import mudules
 const cookieSession = require("cookie-session");
 const { response } = require("express");
-// const supertest = require("supertest");
-// get rid of cookieParser !! it is very easy tampering.
+// get rid of cookieParser ! it is very easy tampering.
 
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
@@ -33,7 +32,7 @@ app.use(
         sameSite: true, // to against CSRF
     })
 );
-/*****************************  WEBSITE SECURITY  *****************************/
+/*******   WEBSITE SECURITY  ********/
 
 // to prevent Clickjacking
 app.use((req, res, next) => {
@@ -41,7 +40,7 @@ app.use((req, res, next) => {
     next();
 });
 
-/*********************************   Route   **********************************/
+//---------------------   Route  -----------------------------
 
 app.get("/", (req, res) => {
     res.render("home", {
@@ -55,7 +54,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// ----------------------------   Authentication  ---------------------------------
+//-------------------- Register Page ----------------------
 
 app.get("/registration", (req, res) => {
     res.render("registration", {
@@ -82,7 +81,7 @@ app.post("/registration", (req, res) => {
         .catch((err) => {
             var errorMessage = "";
             if (err.message.includes("unique constraint")) {
-                errorMessage = " this email address was registered.";
+                errorMessage = " Sorry, this email address was registered.";
             } else {
                 errorMessage = " ⛔️ please input data completely!";
             }
@@ -93,6 +92,8 @@ app.post("/registration", (req, res) => {
             });
         });
 });
+
+//--------------------- Login Page ------------------------
 
 app.get("/login", (req, res) => {
     res.render("login", {
@@ -137,6 +138,8 @@ app.post("/login", (req, res) => {
         });
 });
 
+//----------------------- Sign Page ----------------------------
+
 app.get("/sign", (req, res) => {
     res.render("sign", { layout: "main" });
 });
@@ -162,6 +165,8 @@ app.post("/sign/delete", (req, res) => {
     );
 });
 
+//--------------------- after user signed, Thanks Page -------------------------
+
 app.get("/thanks", (req, res) => {
     if (req.session.sigId) {
         Promise.all([
@@ -184,6 +189,8 @@ app.get("/thanks", (req, res) => {
     }
 });
 
+//--------------------- Users List Page ------------------------
+
 app.get("/list", (req, res) => {
     Promise.resolve(db.getAllSigners()).then((result) => {
         res.render("list", {
@@ -192,6 +199,8 @@ app.get("/list", (req, res) => {
         });
     });
 });
+
+// ------------------------ Users by city ------------------------------
 
 app.get("/list/:city", (req, res) => {
     const city = req.params.city;
@@ -203,6 +212,8 @@ app.get("/list/:city", (req, res) => {
         });
     });
 });
+
+//----------------------- Profile Page -----------------------------
 
 app.get("/profile", (req, res) => {
     if (!req.session.userId) {
