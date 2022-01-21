@@ -22,7 +22,11 @@ An online petition where supporters can register, log in, edit profile informati
 
 -   Main features and function
 
-    <img src="public/gifs/petition_02.mov" >
+    
+
+
+https://user-images.githubusercontent.com/90629487/150563664-9cc81989-fbdf-47a6-ac49-7d3370f60b24.mp4
+
 
 
 -   Login Page
